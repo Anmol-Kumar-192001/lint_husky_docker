@@ -1,18 +1,18 @@
-# Fetching the latest node image on alpine linux
-FROM node:alpine AS development
+# pull the official base image
+FROM node:alpine
+# set working direction
+WORKDIR /app
+# add `/app/node_modules/.bin` to $PATH
 
-# Declaring env
-ENV NODE_ENV development
+# install application dependencies
+COPY package.json /app
 
-# Setting up the work directory
-WORKDIR /react-app
 
-# Installing dependencies
-COPY ./package.json /react-app
 RUN npm install
+# add app
+COPY . /app
 
-# Copying all the files in our project
-COPY . .
 
-# Starting our application
-CMD npm start
+
+# start app
+CMD ["npm", "start"]
